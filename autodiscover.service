@@ -1,0 +1,15 @@
+[Unit]
+Description=Auto discover and register network sensors using wi-fi
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/etc/systemd/autodiscover/AUTODISCOVER
+Restart=on-failure
+RestartSec=10
+KillMode=process
+
+
+[Install]
+WantedBy=multi-user.target
+                  
