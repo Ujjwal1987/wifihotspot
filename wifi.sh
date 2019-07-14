@@ -1,3 +1,5 @@
+while true
+do
 sleep 30
 connected_network="$(iwconfig wlan0| grep ESSID | cut -c 31-100)"
 stored_network="$(cat /etc/wpa_supplicant/wpa_supplicant.conf | grep ssid | cut -c 8-100)"
@@ -19,3 +21,4 @@ else
 	sudo reboot
 	fi
 fi
+done
