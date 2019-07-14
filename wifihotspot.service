@@ -1,0 +1,9 @@
+[Unit]
+Description=wifihotspot
+
+[Service]
+Type=simple
+ExecStart=/bin/bash /home/pi/wifi.sh
+
+[Install]
+WantedBy=multi-user.target
