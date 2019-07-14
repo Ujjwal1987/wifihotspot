@@ -3,7 +3,7 @@ Description=wifihotspot
 
 [Service]
 Type=simple
-ExecStart=/bin/bash /home/pi/wifi.sh
+ExecStart=/bin/bash /home/openhabian/wifi.sh
 
 [Install]
 WantedBy=multi-user.target
