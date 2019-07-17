@@ -1,0 +1,40 @@
+#!/bin/bash
+while true
+do
+sleep 120
+connected_network="$(iwconfig wlan0| grep ESSID | cut -c 31-100)"
+stored_network="$(cat /etc/wpa_supplicant/wpa_supplicant.conf | grep ssid | cut -c 8-100)"
+echo 'connected_network='  $connected_network
+echo 'stored_network='  $stored_network
+if [ $connected_network == $stored_network ]; then
+	echo "i am if"
+        echo 'connected_network='  $connected_network
+        echo 'stored_network='  $stored_network
+        echo "1" > /home/openhabian/wifistatus.txt
+        wifistatus="$(cat /home/openhabian/wifistatus.txt)"
+        echo 'wifistatus=' $wifistatus
+else 
+	wifistatus="$(cat /home/openhabian/wifistatus.txt)"
+        sleep 2
+        echo 'wifistatus=' $wifistatus
+        if [[ $wifistatus == "0" ]]; then
+          echo 'I am else..python'
+          echo 'connected_network='  $connected_network
+          echo 'stored_network='  $stored_network
+	  echo 'wifistatus=' $wifistatus
+          sudo python /home/openhabian/Wifiserver.py
+	else
+	  echo "i am else..hotspot configuration"
+	  echo 'connected_network='  $connected_network
+          echo 'stored_network='  $stored_network
+          echo 'wifistatus=' $wifistatus
+          sudo cp /etc/dhcpcd.conf.back /etc/dhcpcd.conf
+    	  sudo cp /etc/dnsmasq.conf.back /etc/dnsmasq.conf
+          #sudo systemctl restart dhcpcd.service
+          #sudo systemctl reload dnsmasq
+    	  echo "0" > /home/openhabian/wifistatus.txt
+          echo 'rebooting'
+	  sudo reboot
+	fi
+fi
+done

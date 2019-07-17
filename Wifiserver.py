@@ -1,7 +1,9 @@
 import subprocess
 from bottle import run, post, template, request, response, get, route, static_file
 import shutil
+import bottle
 import os
+bottle.TEMPLATE_PATH.insert(0,'/home/openhabian/')
 @route('/')
 def index():
     return template('index')
@@ -44,7 +46,7 @@ def setwifi():
     print wpafile[0],wpafile[1],wpafile[2],wpafile[3],wpafile[4],repstr_ssid,repstr_psw,wpafile[7],wpafile[8]
     
     f1.close()
-    f2 = open("wifistatus.txt", "w")
+    f2 = open("/home/openhabian/wifistatus.txt", "w")
     f2.write("1")
     f2.close
     shutil.copy('/etc/dnsmasq.conf.back1', '/etc/dnsmasq.conf')  
