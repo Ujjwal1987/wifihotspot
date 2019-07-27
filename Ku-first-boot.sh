@@ -2,7 +2,7 @@
 
 # Log everything to file
 exec &> >(tee -a "/boot/first-boot.log")
-KU_FIRSTBOOT="/home/openhabian/KuControl_StartUp.sh"
+KU_FIRSTBOOT="/home/openhabian/wifihotspot/KuControl_StartUp.sh"
 
 timestamp() { date +"%F_%T_%Z"; }
 
@@ -10,7 +10,7 @@ timestamp() { date +"%F_%T_%Z"; }
 ku_install() {
 cd /home/openhabian
 echo 'git clone https://github.com/Ujjwal1987/wifihotspot.git'
-git clone https://github.com/Ujjwal1987/wifihotspot.git
+/usr/bin/git clone -b master https://github.com/Ujjwal1987/wifihotspot.git  &>/dev/null 
 if [ ! -f "$KU_FIRSTBOOT"; then 
 echo "[KuControl] '$KU_FIRSTBOOT' not found"
 fi
