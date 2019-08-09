@@ -26,11 +26,11 @@ cp -r /home/openhabian/wifihotspot/autodiscover.service /etc/systemd/system/
 echo 'load /var/lib/openhab2/config/org/openhab/openhabcloud.config'
 file=/var/lib/openhab2/config/org/openhab/openhabcloud.config
 file1=/home/openhabian/wifihotspot/openhabcloud.config
-while [ ! -f $file ]
-do
-     echo "/var/lib/openhab2/config/org/openhab/openhabcloud.config not found"
-done
-cp $file1 $file
+if [ ! -f $file ]
+ then  cp $file1 $file
+else
+     echo "/var/lib/openhab2/config/org/openhab/openhabcloud.config not copied-already exists"
+fi
 
 #load addons in /etc/openhab2/services...for execution of included functions before loading mqtt.cfg
 echo 'load /etc/openhab2/services/addons.cfg'
