@@ -5,23 +5,6 @@ exec &> >(tee -a "/boot/first-boot.log")
 
 timestamp() { date +"%F_%T_%Z"; }
 
-#only executed after compltion of first_boot script
-ku_install() {
-cd /home/openhabian
-echo 'git clone https://github.com/Ujjwal1987/wifihotspot.git'
-/usr/bin/git clone -b master https://github.com/Ujjwal1987/wifihotspot.git  &>/dev/null 
-if [ ! -f "$KU_FIRSTBOOT" ]; then 
-echo "[KuControl] '$KU_FIRSTBOOT' not found"
-fi
-if (/bin/bash "$KU_FIRSTBOOT"); then
-    echo "[KuControl] Installtion finishing.."
-    echo  "[KuControl] first boot succeeded..(see /home/openhabian/KuControl_startup.sh"
-else
-    echo "[KuControl] Script '$KU_FIRSTBOOT' failed"
-fi
-}
-
-
 fail_inprogress() {
   rm -f /opt/openHABian-install-inprogress
   touch /opt/openHABian-install-failed
