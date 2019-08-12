@@ -1,9 +1,11 @@
 #!/bin/bash
 
 echo 'apt-get update'
-apt-get update
+until apt-get update &>/dev/null; do sleep 1 ; done
+echo "OK"
 echo 'apt-get -y install mosquitto mosquitto-clients'
-apt-get -y install mosquitto mosquitto-clients
+until apt-get -y install mosquitto mosquitto-clients &>/dev/null;  do sleep 1; done
+echo "OK"
 echo 'mosquitto_passwd -b /etc/mosquitto/passwd openhabian Ujjwal1234$'
 mosquitto_passwd -b /etc/mosquitto/passwd openhabian Ujjwal1234$
 echo 'systemctl enable mosquitto.service'
@@ -11,11 +13,13 @@ systemctl enable mosquitto.service
 echo 'systemctl restart mosquitto.service'
 systemctl restart mosquitto.service
 echo 'apt-get -y install dnsmasq hostapd'
-apt-get -y install dnsmasq hostapd
-echo 'git clone https://github.com/Ujjwal1987/wifihotspot.git'
-git clone https://github.com/Ujjwal1987/wifihotspot.git
-echo 'git clone https://github.com/Ujjwal1987/Autodiscovery.git'
-git clone https://github.com/Ujjwal1987/Autodiscovery.git
+until apt-get -y install dnsmasq hostapd &>/dev/null; do sleep 1; done
+echo "OK"
+#echo 'git clone https://github.com/Ujjwal1987/wifihotspot.git'
+#git clone https://github.com/Ujjwal1987/wifihotspot.git
+#echo 'git clone https://github.com/Ujjwal1987/Autodiscovery.git'
+#/usr/bin/git clone https://github.com/Ujjwal1987/Autodiscovery.git &>/dev/null
+#if [ $? -eq 0 ]; then echo "OK"; else echo "Failed"; fi
 echo 'cp -r /home/openhabian/wifihotspot/autodiscover /etc/systemd/'
 cp -r /home/openhabian/wifihotspot/autodiscover /etc/systemd/
 echo 'cp -r /home/openhabian/wifihotspot/autodiscover.service /etc/systemd/system/'
@@ -89,8 +93,10 @@ systemctl enable wifihotspot.service
 echo 'systemctl start wifihotspot.service'
 systemctl start wifihotspot.service
 
-echo 'systemctl /home/openhabian unmask hostapd'
-systemctl /home/openhabian unmask hostapd
+#echo 'systemctl /home/openhabian/wifihotspot unmask hostapd'
+echo 'systemctl unmask hostapd'
+#systemctl /home/openhabian/wifihotspot unmask hostapd
+systemctl unmask hostapd
 echo 'systemctl enable hostapd'
 systemctl enable hostapd
 echo 'systemctl start hostapd'
